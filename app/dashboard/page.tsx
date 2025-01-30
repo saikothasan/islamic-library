@@ -8,12 +8,12 @@ import Link from "next/link"
 
 interface ReadingListItem {
   id: string
+  status: "want_to_read" | "currently_reading" | "read"
   book: {
     id: string
     title: string
     author: string
   }
-  status: "want_to_read" | "currently_reading" | "read"
 }
 
 interface QuranBookmark {
@@ -51,7 +51,14 @@ export default function DashboardPage() {
       .eq("user_id", session!.user.id)
       .limit(5)
     if (error) console.error("Error fetching reading list:", error)
-    else setReadingList(data)
+    else {
+      const formattedData: ReadingListItem[] = data.map((item: any) => ({
+        id: item.id,
+        status: item.status,
+        book: item.books,
+      }))
+      setReadingList(formattedData)
+    }
   }
 
   const fetchQuranBookmarks = async () => {
