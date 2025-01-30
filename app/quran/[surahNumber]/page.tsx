@@ -6,7 +6,7 @@ import { useSupabase } from "@/components/supabase-provider"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PlayCircle, PauseCircle, Bookmark } from "lucide-react"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 
 interface Ayah {
   number: number
