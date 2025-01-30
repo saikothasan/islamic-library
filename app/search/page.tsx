@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Suspense } from "react"
+import { useState, Suspense, type React } from "react"
 import { useSearchParams } from "next/navigation"
 import { useSupabase } from "@/components/supabase-provider"
 import { Input } from "@/components/ui/input"
@@ -9,11 +9,36 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
+interface Book {
+  id: string
+  title: string
+  author: string
+}
+
+interface Scholar {
+  id: string
+  name: string
+  expertise: string[]
+}
+
+interface Hadith {
+  id: string
+  title: string
+  hadith: string
+  source: string
+}
+
+interface SearchResults {
+  books: Book[]
+  scholars: Scholar[]
+  hadiths: Hadith[]
+}
+
 function SearchContent() {
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get("q") || ""
   const [query, setQuery] = useState(initialQuery)
-  const [results, setResults] = useState({ books: [], scholars: [], hadiths: [] })
+  const [results, setResults] = useState<SearchResults>({ books: [], scholars: [], hadiths: [] })
   const [loading, setLoading] = useState(false)
   const { supabase } = useSupabase()
 
@@ -74,7 +99,7 @@ function SearchContent() {
           <TabsTrigger value="hadiths">Hadiths</TabsTrigger>
         </TabsList>
         <TabsContent value="books">
-          {results.books.map((book: any) => (
+          {results.books.map((book) => (
             <Card key={book.id} className="mb-4">
               <CardContent className="p-4">
                 <h2 className="text-xl font-semibold mb-2">
@@ -88,7 +113,7 @@ function SearchContent() {
           ))}
         </TabsContent>
         <TabsContent value="scholars">
-          {results.scholars.map((scholar: any) => (
+          {results.scholars.map((scholar) => (
             <Card key={scholar.id} className="mb-4">
               <CardContent className="p-4">
                 <h2 className="text-xl font-semibold mb-2">
@@ -102,7 +127,7 @@ function SearchContent() {
           ))}
         </TabsContent>
         <TabsContent value="hadiths">
-          {results.hadiths.map((hadith: any, index: number) => (
+          {results.hadiths.map((hadith, index) => (
             <Card key={index} className="mb-4">
               <CardContent className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{hadith.title}</h2>
