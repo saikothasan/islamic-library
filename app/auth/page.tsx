@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, type React } from "react"
+import { useState } from "react"
+import type { FormEvent, ChangeEvent } from "react"
 import { useSupabase } from "@/components/supabase-provider"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -16,7 +17,7 @@ export default function AuthPage() {
   const { supabase } = useSupabase()
   const router = useRouter()
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleAuth = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
@@ -50,14 +51,14 @@ export default function AuthPage() {
                 type="email"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 required
               />
               <Input
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 required
               />
               {error && <p className="text-red-500 text-sm">{error}</p>}
