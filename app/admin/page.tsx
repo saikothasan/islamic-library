@@ -9,10 +9,15 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/hooks/use-toast"
 
+interface Category {
+  id: string
+  name: string
+}
+
 export default function AdminPage() {
   const { supabase, session } = useSupabase()
   const [isAdmin, setIsAdmin] = useState(false)
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
@@ -48,7 +53,7 @@ export default function AdminPage() {
       return
     }
 
-    setCategories(data)
+    setCategories(data as Category[])
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -141,7 +146,7 @@ export default function AdminPage() {
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((category: any) => (
+                  {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
                     </SelectItem>
