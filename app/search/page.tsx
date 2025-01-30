@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Suspense, type React } from "react"
+import { useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { useSupabase } from "@/components/supabase-provider"
 import { Input } from "@/components/ui/input"
@@ -42,7 +42,7 @@ function SearchContent() {
   const [loading, setLoading] = useState(false)
   const { supabase } = useSupabase()
 
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     try {
